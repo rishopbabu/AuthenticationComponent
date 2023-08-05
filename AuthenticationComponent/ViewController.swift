@@ -5,6 +5,7 @@
 //  Created by Mac-OBS-51 on 05/08/23.
 //
 
+import LocalAuthentication
 import UIKit
 
 class ViewController: UIViewController {
@@ -62,8 +63,47 @@ class ViewController: UIViewController {
     }
     
     @objc private func authorizedButtonTapped() {
+        authorizeUsingBioMetricOrPassCode()
+    }
+    
+    private func authorizeUsingBioMetricOrPassCode() {
+        
+        let context = LAContext()
+        var error: NSError? = nil
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication,
+                                     error: &error) {
+            let reason = "Please authorize yourseelf to login"
+            context.evaluatePolicy(.deviceOwnerAuthentication,
+                                   localizedReason: reason) { [weak self] success, error in
+                DispatchQueue.main.async {
+                    guard success, error == nil else {
+                        return (self?.retryAlert())!
+                    }
+                }
+                
+            }
+        } else {
+            unAvailableAlert()
+        }
         
     }
     
+    private func unAvailableAlert() {
+        let alert = UIAlertController(title: "Unavailable",
+                                      message: "Sorry you can't use this feature ☹️",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss",
+                                      style: .cancel))
+        present(alert, animated: true)
+    }
+    
+    private func retryAlert() {
+        let alert = UIAlertController(title: "Failed to Authenticate",
+                                      message: "Please try again ☹️",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss",
+                                      style: .cancel))
+        present(alert, animated: true)
+    }
 }
 
