@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  AuthenticationComponent
 //
-//  Created by Mac-OBS-51 on 05/08/23.
+//  Created by Rishop Babu on 05/08/23.
 //
 
 import LocalAuthentication
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         
         let authorizeButtonItem = UIButton()
         authorizeButtonItem.translatesAutoresizingMaskIntoConstraints = false
-        authorizeButtonItem.backgroundColor = .red
+        authorizeButtonItem.backgroundColor = .green
         authorizeButtonItem.layer.cornerRadius = 35/2
         authorizeButtonItem.setTitle("Press Me", for: .normal)
         authorizeButtonItem.addTarget(self, action: #selector(authorizedButtonTapped), for: .touchUpInside)
@@ -79,6 +79,8 @@ class ViewController: UIViewController {
                     guard success, error == nil else {
                         return (self?.retryAlert())!
                     }
+                    let viewController = SuccessViewController()
+                    self?.navigationController?.pushViewController(viewController, animated: true)
                 }
                 
             }

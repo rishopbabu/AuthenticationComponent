@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  AuthenticationComponent
 //
-//  Created by Mac-OBS-51 on 05/08/23.
+//  Created by Rishop Babu on 05/08/23.
 //
 
 import UIKit
