@@ -75,7 +75,7 @@ class ViewController: UIViewController {
             let reason = "Please authorize yourseelf to login"
             context.evaluatePolicy(.deviceOwnerAuthentication,
                                    localizedReason: reason) { [weak self] success, error in
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     guard success, error == nil else {
                         return (self?.retryAlert())!
                     }
